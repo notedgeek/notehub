@@ -1,18 +1,14 @@
 package com.notedgeek.notehub.controllers;
 
 import com.notedgeek.notehub.asciidoctor.AsciidoctorConverter;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Controller
 public class IndexController {
@@ -31,10 +27,8 @@ public class IndexController {
         if(html == null) {
             //String markup = Files.readString(Paths.get(ClassLoader.getSystemResource("classpath:index.adoc").toURI()));
             try {
-                Resource resource = new ClassPathResource("index.adoc");
-                InputStream inputStream = resource.getInputStream();
-                byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
-                String markup = new String(bytes, StandardCharsets.UTF_8);
+                File file = ResourceUtils.getFile("classpath:index.adoc");
+                String markup = new String(Files.readAllBytes(file.toPath()));
                 html = asciidoctor.convert(markup);
             } catch (IOException e) {
                 e.printStackTrace();
