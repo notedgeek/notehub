@@ -24,7 +24,7 @@ public class IndexController {
     private synchronized void getHtml() {
         if(html == null) {
             try {
-                String markup = Files.readString(Paths.get(ClassLoader.getSystemResource("index.adoc").toURI()));
+                String markup = Files.readString(Paths.get(ClassLoader.getSystemResource("classpath:index.adoc").toURI()));
                 html = asciidoctor.convert(markup);
             } catch (Exception ex) {
                 ex.printStackTrace();
