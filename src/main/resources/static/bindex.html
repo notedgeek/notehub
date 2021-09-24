@@ -1,0 +1,81 @@
+<header>
+  <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
+  <link rel="stylesheet" href="styles/rouge/seye.css">
+</header>
+<body>
+<div class="sect1">
+<h2 id="_heading_1">HEADING 1</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_heading_2">Heading 2</h3>
+<h3 id="_creating_collections">creating collections</h3>
+<div class="sect3">
+<h4 id="_heading_3">heading 3</h4>
+<div class="sect4">
+<h5 id="_heading_4">heading 4</h5>
+<div class="paragraph">
+<p>This is just
+some text.</p>
+</div>
+<div class="paragraph">
+<p>This is another paragraph,
+with some <code>code</code>,  <strong>bold</strong>, and <em>italic</em> text.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"convert"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">convert</span><span class="o">(</span>
+    <span class="nd">@RequestParam</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"asciidoc"</span><span class="o">,</span> <span class="n">defaultValue</span> <span class="o">=</span> <span class="no">DEFAULT_ASCIIDOC</span><span class="o">)</span> <span class="nc">String</span> <span class="n">asciidoc</span><span class="o">,</span>
+    <span class="nc">Model</span> <span class="n">model</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">html</span> <span class="o">=</span> <span class="nc">AsciidoctorConverter</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="n">asciidoc</span><span class="o">);</span>
+    <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"html"</span><span class="o">,</span> <span class="n">html</span><span class="o">);</span>
+    <span class="k">return</span> <span class="s">"render"</span><span class="o">;</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h3 id="_creating_collections">creating collections</h3>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin"><span class="kd">val</span> <span class="py">set</span> <span class="p">=</span> <span class="nf">hashSetOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">53</span><span class="p">)</span>
+
+<span class="kd">val</span> <span class="py">list</span> <span class="p">=</span> <span class="nf">arrayListOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">53</span><span class="p">)</span>
+
+<span class="kd">val</span> <span class="py">map</span> <span class="p">=</span> <span class="nf">hashMapOf</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="s">"one"</span><span class="p">,</span> <span class="mi">7</span> <span class="n">to</span> <span class="s">"seven"</span><span class="p">,</span> <span class="mi">53</span> <span class="n">to</span> <span class="s">"fifty-three"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin"><span class="kd">val</span> <span class="py">strings</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="s">"first"</span><span class="p">,</span> <span class="s">"second"</span><span class="p">,</span> <span class="s">"fourteenth"</span><span class="p">)</span>
+
+<span class="nf">println</span><span class="p">(</span><span class="n">strings</span><span class="p">.</span><span class="n">javaClass</span><span class="p">)</span>
+
+<span class="nf">println</span><span class="p">(</span><span class="n">strings</span><span class="p">.</span><span class="nf">last</span><span class="p">())</span>
+
+<span class="c1">// =&gt; class java.util.Arrays$ArrayList</span>
+<span class="c1">// =&gt; fourteenth</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin"><span class="kd">val</span> <span class="py">numbers</span> <span class="p">=</span> <span class="nf">setOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nf">println</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">javaClass</span><span class="p">)</span>
+
+<span class="nf">println</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="nf">max</span><span class="p">())</span>
+
+<span class="c1">// =&gt; class java.util.LinkedHashSet</span>
+<span class="c1">// =&gt; 14</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+  </body>
+  
