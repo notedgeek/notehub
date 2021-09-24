@@ -31,7 +31,7 @@ public class IndexController {
         if(html == null) {
             //String markup = Files.readString(Paths.get(ClassLoader.getSystemResource("classpath:index.adoc").toURI()));
             try {
-                Resource resource = new ClassPathResource("classpath:index.adoc");
+                Resource resource = new ClassPathResource("index.adoc");
                 InputStream inputStream = resource.getInputStream();
                 byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
                 String markup = new String(bytes, StandardCharsets.UTF_8);
