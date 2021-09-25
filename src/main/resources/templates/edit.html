@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
+    <link rel="stylesheet" href="styles/rouge/seye.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        #edit-text {
+            color: #ffffff;
+            background-color: #222222;
+            resize: none;
+            height: 100%;
+            font-size: 9pt;
+            font-weight: lighter;
+            -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+            -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+            box-sizing: border-box;         /* Opera/IE 8+ */
+            outline: none;
+        }
+
+        #main-frame {
+            display: flex;
+            border: 1px;
+            border-style: solid;
+            margin: 10px 10px 10px 10px;
+            height: 750px;
+        }
+
+        #input-frame {
+            border: 1px;
+            border-style: solid;
+            margin: 10px 10px 10px 10px;
+            height: 65%;
+        }
+
+        #output-frame {
+            flex: 1;
+            margin: 10px 10px 10px 10px;
+            height: 96%;
+            min-width: 200px;
+        }
+
+        #rendered-output {
+            height: 100%;
+            max-width: 1400px;
+            padding: 3px 3px 3px 3px;
+            -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+            -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+            box-sizing: border-box;         /* Opera/IE 8+ */
+            overflow-y: scroll;
+        }
+
+        #control-frame {
+            padding-top: 30px;
+        }
+
+    </style>
+    <script>
+        function render() {
+            var text = document.getElementById("edit-text").value;
+            if(text.length < 1) {
+                return
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                document.getElementById("rendered-output").innerHTML = xhttp.responseText;
+            }
+            xhttp.open("POST", "convert", true);
+            xhttp.setRequestHeader("Content-Type", "text/plain");
+
+            xhttp.send(text);
+        }
+    </script>
+</head>
+<body>
+<h2>Edit</h2>
+<div id="main-frame">
+    <div id=input-frame>
+        <div id="edit-frame">
+            <textarea id="edit-text" cols="100"></textarea>
+        </div>
+        <div id="control-frame">
+            <button id="render-button" onclick="render()">render</button>
+        </div>
+    </div>
+
+    <div id=output-frame>
+        <div id="rendered-output">
+        </div>
+    </div>
+</div>
+</body>
+</html>

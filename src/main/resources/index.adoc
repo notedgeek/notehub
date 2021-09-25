@@ -1,2 +1,424 @@
-= NOTE HUB
+= `helloWorld`
+
+[source, kotlin]
+----
+fun main(args: Array<String>) {
+    println("Hello, world")
+}
+----
+
+= function definition
+
+[source, kotlin]
+----
+fun max(a: Int, b: Int): Int {
+    return if (a > b) a else b
+}
+----
+
+[source, kotlin]
+----
+fun max(a: Int, b: Int): Int = if (a > b) a else b
+----
+
+return type can be omitted for expression bodied functions (or if return type is `Unit`)
+
+[source, kotlin]
+----
+fun max(a: Int, b: Int) = if (a > b) a else b
+----
+
+[source, kotlin]
+----
+val answer: Int = 42
+val answer = 42
+----
+
+[source, kotlin]
+----
+val message: String
+if (canPerformOperation()) {
+    message = "Success"
+} else {
+    message = "Failed"
+}
+----
+
+= string templates
+
+[source, kotlin]
+----
+fun main(args: Array<String>) {
+    val name = if (args.size > 0) args[0] else "Kotlin"
+    println("Hello, $name!")
+}
+----
+
+[source, kotlin]
+----
+fun main(args: Array<String>) {
+    if (args.size > 0) {
+        println("Hello, ${args[0]}!")
+    }
+}
+----
+
+= class definition
+
+[source, kotlin]
+----
+class Person (val name: String, var isMarried: Boolean)
+
+fun main() {
+    val person = Person("Simon", false)
+    println("person - name: ${person.name}, isMarried: ${person.isMarried}")
+    person.isMarried = true
+    println("person - name: ${person.name}, isMarried: ${person.isMarried}")
+}
+// => person - name: Simon, isMarried: false
+// => person - name: Simon, isMarried: true
+----
+
+= custom accessors
+
+[source, kotlin]
+----
+class Rectangle(val height: Int, val width: Int) {
+    val isSquare: Boolean
+        get() {
+            return height == width
+        }
+}
+
+fun main() {
+    println(Rectangle(1,2).isSquare)
+    println(Rectangle(1,1).isSquare)
+}
+// => false
+// => true
+----
+
+= source layout
+
+[source, kotlin]
+----
+package geometry.shapes
+
+import java.util.Random
+
+class Rectangle(val height: Int, val width: Int) {
+    val isSquare: Boolean
+        get() {
+            return height == width
+        }
+}
+
+fun createRandomRectangle(): Rectangle {
+    val random = Random()
+    return Rectangle(Math.abs(random.nextInt()), Math.abs(random.nextInt()))
+}
+
+fun main() {
+    val rectangle = createRandomRectangle()
+    println("rectangle ${rectangle.width} by ${rectangle.height} " +
+            "isSquare: ${rectangle.isSquare}")
+}
+
+// => rectangle 1130411988 by 186773173 isSquare: false
+----
+
+= enums
+
+[source, kotlin]
+----
+enum class Color {
+    RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, VIOLET
+}
+----
+
+= enums & when
+
+[source, kotlin]
+----
+enum class Colour (var r: Int, val g: Int, val b: Int) {
+    RED(255, 0, 0), ORANGE(255, 165, 0),
+    YELLOW(255, 255, 0), GREEN(0, 255, 0), BLUE(0, 0, 255),
+    INDIGO(75, 0, 130), VIOLET(238, 130, 238);
+
+    fun rgb() = (r * 256 + g) * 256 + b
+}
+
+fun getMnemonic(colour: Colour) =
+    when (colour) {
+        Colour.RED -> "Richard"
+        Colour.ORANGE -> "Of"
+        Colour.YELLOW -> "York"
+        Colour.GREEN -> "Gave"
+        Colour.BLUE -> "Battle"
+        Colour.INDIGO -> "In"
+        Colour.VIOLET -> "Vain"
+    }
+
+fun getWarmth(colour: Colour) = when(colour) {
+    Colour.RED, Colour.ORANGE, Colour.YELLOW -> "warm"
+    Colour.GREEN -> "neutral"
+    Colour.BLUE, Colour.INDIGO, Colour.VIOLET -> "cold"
+}
+
+fun main() {
+    println(Colour.BLUE.rgb())
+    println(getMnemonic(Colour.BLUE))
+    println(getWarmth(Colour.BLUE))
+}
+
+// => 255
+// => Battle
+// => cold
+----
+
+= importing enum values
+
+[source, kotlin]
+----
+import packageName.Colour.*
+----
+
+[source, kotlin]
+----
+fun getWarmth(colour: Colour) = when(colour) {
+    RED, ORANGE, YELLOW -> "warm"
+    GREEN -> "neutral"
+    BLUE, INDIGO, VIOLET -> "cold"
+}
+----
+
+= when with sets
+
+[source, kotlin]
+----
+fun mix(c1: Colour, c2: Colour) =
+    when (setOf(c1, c2)) {
+        setOf(RED, YELLOW) -> ORANGE
+        setOf(YELLOW, BLUE) -> GREEN
+        setOf(BLUE, VIOLET) -> INDIGO
+        else -> throw Exception("Dirty colour")
+    }
+----
+
+= smart casts, `if`, and `when`
+
+[source, kotlin]
+----
+interface Expr
+
+class Num(val value: Int) : Expr
+
+class Sum(val left: Expr, val right: Expr) : Expr
+
+fun eval(e: Expr): Int {
+    if (e is Num) {
+        val n = e as Num // explicit cast redundant
+        return n.value
+    }
+    if (e is Sum) {
+        return eval(e.left) + eval(e.right)
+    }
+    throw IllegalArgumentException("Unknown expression")
+}
+
+fun eval(e: Expr): Int =
+    if (e is Num) {
+        e.value
+    } else if (e is Sum) {
+        eval(e.left) + eval(e.right)
+    } else {
+        throw IllegalArgumentException("Unknown expression")
+    }
+
+fun eval(e: Expr): Int =
+    when (e) {
+        is Num -> e.value
+        is Sum -> eval(e.left) + eval(e.right)
+        else -> throw IllegalArgumentException("Unknown expression")
+    }
+
+----
+
+= blocks as branches in `if` and `when`
+
+[source, kotlin]
+----
+fun evalWithLogging(e: Expr): Int =
+    when (e) {
+        is Num -> {
+            println("num: ${e.value}")
+            e.value
+        }
+        is Sum -> {
+            val left = evalWithLogging(e.left)
+            val right = evalWithLogging(e.right)
+            println("sum: $left + $right")
+            left + right
+        }
+        else -> throw IllegalArgumentException("Unknown expression")
+    }
+
+fun main() {
+    println(evalWithLogging((Sum(Sum(Num(1), Num(2)), Num(4)))))
+}
+
+// => num: 1
+// => num: 2
+// => sum: 1 + 2
+// => num: 4
+// => sum: 3 + 4
+// => 7
+----
+
+= `do` and `while`
+
+as Java:
+
+[source, kotlin]
+----
+while (condition) {
+    // stuff
+}
+
+do {
+    // stuff
+} while (condition)
+----
+
+= ranges and progressions
+
+[source, kotlin]
+----
+fun fizzBuzz(i: Int) = when {
+    i % 15 == 0 -> "FizzBuzz "
+    i % 3 == 0 -> "Fizz "
+    i % 5 == 0 -> "Buzz "
+    else -> "$i "
+}
+
+for (i in 1..100) {
+    print(fizzBuzz(i))
+}
+
+// => 1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz ...
+
+for (i in 100 downTo 1 step 2) {
+    print(fizzBuzz(i))
+}
+
+// => Buzz 98 Fizz 94 92 FizzBuzz ... 8 Fizz 4 2
+
+for (i in 1 until 10) {
+    print(fizzBuzz(i))
+}
+
+// => 1 2 Fizz 4 Buzz Fizz 7 8 Fizz
+----
+
+= iterating over maps
+
+[source, kotlin]
+----
+val binaryReps = TreeMap<Char, String>()
+
+for(c in 'A'..'F') {
+    val binary = Integer.toBinaryString(c.toInt())
+    binaryReps[c] = binary
+}
+
+for((letter, binary) in binaryReps) {
+    println("$letter = $binary")
+}
+
+// => A = 1000001
+// => B = 1000010
+// => C = 1000011
+// => D = 1000100
+// => E = 1000101
+// => F = 1000110
+----
+
+= using `in` to check collection and range membership
+
+[source, kotlin]
+----
+fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+
+fun isNotDigit(c: Char) = c !in '0'..'9'
+----
+
+[source, kotlin]
+----
+fun recognize(c: Char) = when (c) {
+    in '0'..'9' -> "It's a digit!"
+    in 'a'..'z', in 'A'..'Z' -> "It's a letter"
+    else -> "I don't know"
+}
+----
+
+= exceptions
+
+[source, kotlin]
+----
+if (percentage !in 0..100) {
+    throw IllegalArgumentException("A percentage value must be between 0 and 100: $percentage")
+}
+----
+
+a `throw` clause can be an expression:
+
+[source, kotlin]
+----
+val percentage =
+    if (number in 0..100)
+        number
+    else
+        throw IllegalArgumentException("A percentage value must be between 0 and 100: $number")
+----
+
+[source, kotlin]
+----
+fun readNumber(reader: BufferedReader): Int? {
+    try {
+        val line = reader.readLine()
+        return Integer.parseInt(line)
+    } catch (e: NumberFormatException) {
+        return null
+    } finally {
+        reader.close()
+    }
+}
+----
+
+[source, kotlin]
+----
+fun readNumber(reader: BufferedReader) {
+    val number = try {
+        Integer.parseInt(reader.readLine())
+    } catch (e: NumberFormatException) {
+        return
+    }
+
+    println(number)
+}
+----
+
+[source, kotlin]
+----
+fun readNumber(reader: BufferedReader) {
+    val number = try {
+        Integer.parseInt(reader.readLine())
+    } catch (e: NumberFormatException) {
+        return
+    }
+
+    println(number)
+}
+----
+
 
