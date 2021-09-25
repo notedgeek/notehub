@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
+    <link rel="stylesheet" href="styles/rouge/seye.css">
+</head>
+<body>
+<style>
+    /* Split the screen in half */
+    .split {
+        height: 100%;
+        width: 50%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    /* Control the left side */
+    .left {
+        left: 0;
+    }
+
+    /* Control the right side */
+    .right {
+        right: 0;
+    }
+
+    /* If you want the content centered horizontally and vertically */
+    .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+</style>
+<script>
+    function render() {
+        var text = document.getElementById("asciidoc").value;
+        if(text.length < 1) {
+            return
+        }
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            document.getElementById("rendered-output").innerHTML = xhttp.responseText;
+        }
+        xhttp.open("POST", "convert", true);
+        xhttp.setRequestHeader("Content-Type", "text/plain");
+
+        xhttp.send(text);
+    }
+</script>
+<div class="split left">
+    <div class="centered">
+        <button id="render-button" onclick="render()">render</button>
+        <textarea id="asciidoc" rows="60" cols="100"></textarea>
+    </div>
+</div>
+
+<div class="split right">
+    <div id="rendered-output">
+    </div>
+</div>
+
+</body>
+</html>
