@@ -3,7 +3,6 @@ package com.notedgeek.notehub.bootstrap;
 import com.notedgeek.notehub.entity.Doc;
 import com.notedgeek.notehub.service.DocService;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
@@ -13,7 +12,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
-@Component
+//@Component
 public class BootstrapData implements CommandLineRunner {
 
     private final DocService service;

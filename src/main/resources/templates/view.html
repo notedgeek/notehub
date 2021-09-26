@@ -42,19 +42,19 @@
     </style>
 </head>
 <body>
-<h2>list</h2>
+<h2>view</h2>
 <div id="main-frame">
     <div id=output-frame>
-        <form action="/create" method="GET">
-            <button type=submit>create</button>
-        </form>
-        <div th:each="doc : ${docs}" class="doc">
+        <div class="doc">
             <a th:href="${'/edit/' + doc.getId()}" class="doc-anchor">
-            <div th:text="${'date created : ' + doc.getDateCreated() + ', '
+                <div th:text="${'date created : ' + doc.getDateCreated() + ', '
                 + 'date updated : ' + doc.getDateUpdated()}" />
-            <div th:utext="${doc.getHtml()}" />
+                <div th:utext="${doc.getHtml()}" />
             </a>
         </div>
+        <form action="/list" method="GET">
+            <button type=submit>list</button>
+        </form>
     </div>
 </div>
 </body>

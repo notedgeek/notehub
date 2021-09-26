@@ -1,8 +1,8 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="/styles/asciidoc/boot-darkly.css">
-    <link rel="stylesheet" href="/styles/rouge/seye.css">
-    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
+    <link rel="stylesheet" href="styles/rouge/seye.css">
+    <link rel="stylesheet" href="styles/style.css">
     <style>
         #edit-text {
             color: #eee;
@@ -65,36 +65,32 @@
             xhttp.onload = function() {
                 document.getElementById("rendered-output").innerHTML = xhttp.responseText;
             }
-            xhttp.open("POST", "/api/convert", true);
+            xhttp.open("POST", "api/convert", true);
             xhttp.setRequestHeader("Content-Type", "text/plain");
 
             xhttp.send(text);
         }
-        document.addEventListener("DOMContentLoaded", function(){
-            render()
-        });
     </script>
 </head>
 <body>
-<h2>edit</h2>
-<form action="/update" method="POST">
-    <div id="main-frame">
-        <div id=input-frame>
-            <div id="edit-frame">
-                <textarea id="edit-text" name="markdown" cols="100" th:text="${doc.getMarkdown()}" ></textarea>
-                <input type="hidden" name="id" th:value="${doc.getId()}" />
-            </div>
-            <div id="control-frame">
-                <button id="render-button" type="button" onclick="render()">render</button>
-                <button id="submit-button" type="submit">save</button>
-            </div>
+<h2>create</h2>
+<form action="/save" method="POST">
+<div id="main-frame">
+    <div id=input-frame>
+        <div id="edit-frame">
+            <textarea id="edit-text" name="markdown" cols="100"></textarea>
         </div>
-
-        <div id=output-frame>
-            <div id="rendered-output">
-            </div>
+        <div id="control-frame">
+            <button id="render-button" type="button" onclick="render()">render</button>
+            <button id="submit-button" type="submit">save</button>
         </div>
     </div>
+
+    <div id=output-frame>
+        <div id="rendered-output">
+        </div>
+    </div>
+</div>
 </form>
 </body>
 </html>

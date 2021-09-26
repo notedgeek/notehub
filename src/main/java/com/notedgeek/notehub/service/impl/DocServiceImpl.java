@@ -6,7 +6,11 @@ import com.notedgeek.notehub.service.DocService;
 import com.notedgeek.notehub.util.AsciidoctorConverter;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,8 +25,13 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public Iterable<Doc> listAll() {
-        return repository.findAll();
+    public List<Doc> listAll() {
+        List<Doc> docs = new ArrayList<>();
+        for(Doc doc: repository.findAll()) {
+            docs.add(doc);
+        }
+        Collections.sort(docs, Comparator.comparing(Doc::getDateUpdated).reversed());
+        return docs;
     }
 
     @Override
@@ -31,13 +40,13 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public void save(Doc doc) {
+    public Doc save(Doc doc) {
         doc.setHtml(converter.convert(doc.getMarkdown()));
         Date date = new Date();
         doc.setDateUpdated(date);
         if(doc.getDateCreated() == null) {
             doc.setDateCreated(date);
         }
-        repository.save(doc);
+        return repository.save(doc);
     }
 }
