@@ -1,0 +1,36 @@
+= function definition
+
+[source, kotlin]
+----
+fun max(a: Int, b: Int): Int {
+    return if (a > b) a else b
+}
+----
+
+[source, kotlin]
+----
+fun max(a: Int, b: Int): Int = if (a > b) a else b
+----
+
+return type can be omitted for expression bodied functions (or if return type is `Unit`)
+
+[source, kotlin]
+----
+fun max(a: Int, b: Int) = if (a > b) a else b
+----
+
+[source, kotlin]
+----
+val answer: Int = 42
+val answer = 42
+----
+
+[source, kotlin]
+----
+val message: String
+if (canPerformOperation()) {
+    message = "Success"
+} else {
+    message = "Failed"
+}
+----

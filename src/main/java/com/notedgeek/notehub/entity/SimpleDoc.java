@@ -3,6 +3,8 @@ package com.notedgeek.notehub.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import java.util.Date;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -13,20 +15,26 @@ public class SimpleDoc {
     @GeneratedValue(strategy = AUTO)
     private long id;
 
-    private String markup;
+    @Lob
+    private String markdown;
 
+    @Lob
     private String html;
+
+    private Date dateCreated;
+
+    private Date dateUpdated;
 
     public long getId() {
         return id;
     }
 
-    public String getMarkup() {
-        return markup;
+    public String getMarkdown() {
+        return markdown;
     }
 
-    public void setMarkup(String markup) {
-        this.markup = markup;
+    public void setMarkdown(String markdown) {
+        this.markdown = markdown;
     }
 
     public String getHtml() {
@@ -35,5 +43,21 @@ public class SimpleDoc {
 
     public void setHtml(String html) {
         this.html = html;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 }

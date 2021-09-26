@@ -1,0 +1,12 @@
+= when with sets
+
+[source, kotlin]
+----
+fun mix(c1: Colour, c2: Colour) =
+    when (setOf(c1, c2)) {
+        setOf(RED, YELLOW) -> ORANGE
+        setOf(YELLOW, BLUE) -> GREEN
+        setOf(BLUE, VIOLET) -> INDIGO
+        else -> throw Exception("Dirty colour")
+    }
+----

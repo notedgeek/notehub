@@ -6,7 +6,7 @@ import com.notedgeek.notehub.service.SimpleDocService;
 import com.notedgeek.notehub.util.AsciidoctorConverter;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Date;
 
 @Service
 public class SimpleDocServiceImpl implements SimpleDocService {
@@ -20,13 +20,18 @@ public class SimpleDocServiceImpl implements SimpleDocService {
     }
 
     @Override
-    public List<SimpleDoc> listAll() {
-        return null;
+    public Iterable<SimpleDoc> listAll() {
+        return repository.findAll();
     }
 
     @Override
     public void save(SimpleDoc simpleDoc) {
-        simpleDoc.setHtml(converter.convert(simpleDoc.getMarkup()));
+        simpleDoc.setHtml(converter.convert(simpleDoc.getMarkdown()));
+        Date date = new Date();
+        simpleDoc.setDateUpdated(date);
+        if(simpleDoc.getDateCreated() == null) {
+            simpleDoc.setDateCreated(date);
+        }
         repository.save(simpleDoc);
     }
 }

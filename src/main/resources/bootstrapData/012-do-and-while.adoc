@@ -1,0 +1,13 @@
+= `do` and `while`
+
+as Java:
+[source, kotlin]
+----
+while (condition) {
+    // stuff
+}
+
+do {
+    // stuff
+} while (condition)
+----

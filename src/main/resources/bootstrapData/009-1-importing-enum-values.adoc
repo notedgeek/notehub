@@ -1,0 +1,15 @@
+= importing enum values
+
+[source, kotlin]
+----
+import packageName.Colour.*
+----
+
+[source, kotlin]
+----
+fun getWarmth(colour: Colour) = when(colour) {
+    RED, ORANGE, YELLOW -> "warm"
+    GREEN -> "neutral"
+    BLUE, INDIGO, VIOLET -> "cold"
+}
+----

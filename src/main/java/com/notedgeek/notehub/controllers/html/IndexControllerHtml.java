@@ -7,13 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class IndexControllerHtml {
 
     private final AsciidoctorConverter asciidoctor = new AsciidoctorConverter();
     private String html = null;
     private final ResourceHelper resourceHelper;
 
-    public IndexController(ResourceHelper resourceHelper) {
+    public IndexControllerHtml(ResourceHelper resourceHelper) {
         this.resourceHelper = resourceHelper;
     }
 

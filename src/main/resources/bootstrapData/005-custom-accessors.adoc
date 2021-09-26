@@ -1,0 +1,18 @@
+= custom accessors
+
+[source, kotlin]
+----
+class Rectangle(val height: Int, val width: Int) {
+    val isSquare: Boolean
+        get() {
+            return height == width
+        }
+}
+
+fun main() {
+    println(Rectangle(1,2).isSquare)
+    println(Rectangle(1,1).isSquare)
+}
+// => false
+// => true
+----

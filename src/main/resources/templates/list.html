@@ -1,0 +1,47 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
+    <link rel="stylesheet" href="styles/rouge/seye.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+
+        #main-frame {
+            alignment: center;
+        }
+
+        #output-frame {
+            background-color: #222;
+            height: 100%;
+            max-width: 1400px;
+            padding: 3px 3px 3px 3px;
+        }
+
+        .doc {
+            border: 1px;
+            border-style: solid;
+            border-color: #444;
+            border-radius: 5px;
+            margin: 5px 5px 5px 5px;
+            padding: 5px 5px 5px 5px;
+        }
+
+        .doc:hover {
+            border-color: #888;
+            background-color: #444;
+        }
+
+    </style>
+</head>
+<body>
+<h2>list</h2>
+<div id="main-frame">
+    <div id=output-frame>
+        <div th:each="doc : ${docs}" class="doc">
+            <div th:text="${'date created : ' + doc.getDateCreated() + ', '
+                + 'date updated : ' + doc.getDateUpdated()}" />
+            <div th:utext="${doc.getHtml()}" />
+        </div>
+    </div>
+</div>
+</body>
+</html>

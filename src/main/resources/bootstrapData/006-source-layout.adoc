@@ -1,0 +1,28 @@
+= source layout
+
+[source, kotlin]
+----
+package geometry.shapes
+
+import java.util.Random
+
+class Rectangle(val height: Int, val width: Int) {
+    val isSquare: Boolean
+        get() {
+            return height == width
+        }
+}
+
+fun createRandomRectangle(): Rectangle {
+    val random = Random()
+    return Rectangle(Math.abs(random.nextInt()), Math.abs(random.nextInt()))
+}
+
+fun main() {
+    val rectangle = createRandomRectangle()
+    println("rectangle ${rectangle.width} by ${rectangle.height} " +
+            "isSquare: ${rectangle.isSquare}")
+}
+
+// => rectangle 1130411988 by 186773173 isSquare: false
+----

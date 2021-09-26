@@ -1,0 +1,15 @@
+= class definition
+
+[source, kotlin]
+----
+class Person (val name: String, var isMarried: Boolean)
+
+fun main() {
+    val person = Person("Simon", false)
+    println("person - name: ${person.name}, isMarried: ${person.isMarried}")
+    person.isMarried = true
+    println("person - name: ${person.name}, isMarried: ${person.isMarried}")
+}
+// => person - name: Simon, isMarried: false
+// => person - name: Simon, isMarried: true
+----

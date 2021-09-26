@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
     <link rel="stylesheet" href="styles/rouge/seye.css">
@@ -65,7 +65,7 @@
             xhttp.onload = function() {
                 document.getElementById("rendered-output").innerHTML = xhttp.responseText;
             }
-            xhttp.open("POST", "convert", true);
+            xhttp.open("POST", "api/convert", true);
             xhttp.setRequestHeader("Content-Type", "text/plain");
 
             xhttp.send(text);
@@ -73,7 +73,7 @@
     </script>
 </head>
 <body>
-<h2>edit</h2>
+<h2 th:text="${operation}"></h2>
 <div id="main-frame">
     <div id=input-frame>
         <div id="edit-frame">
