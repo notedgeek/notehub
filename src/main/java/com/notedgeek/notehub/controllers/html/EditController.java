@@ -1,4 +1,4 @@
-package com.notedgeek.notehub.controllers;
+package com.notedgeek.notehub.controllers.html;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

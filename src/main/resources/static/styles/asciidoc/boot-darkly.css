@@ -242,8 +242,10 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #c7254e;
-  background-color: #f9f2f4;
+  /*color: #c7254e;*/
+  /*background-color: #f9f2f4;*/
+  color: #555;
+  background-color: #999;
   border-radius: 4px;
 }
 kbd {
@@ -277,7 +279,6 @@ pre {
 }
 pre code {
   padding: 0;
-  font-size: inherit;
   color: inherit;
   white-space: pre-wrap;
   background-color: transparent;

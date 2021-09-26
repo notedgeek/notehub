@@ -1,6 +1,6 @@
 package com.notedgeek.notehub.controllers.rest;
 
-import com.notedgeek.notehub.asciidoctor.AsciidoctorConverter;
+import com.notedgeek.notehub.util.AsciidoctorConverter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
