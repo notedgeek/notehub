@@ -9,7 +9,7 @@ import java.util.Date;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-public class SimpleDoc {
+public class Doc {
 
     @Id
     @GeneratedValue(strategy = AUTO)

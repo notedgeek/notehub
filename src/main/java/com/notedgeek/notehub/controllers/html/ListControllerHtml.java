@@ -1,6 +1,6 @@
 package com.notedgeek.notehub.controllers.html;
 
-import com.notedgeek.notehub.service.SimpleDocService;
+import com.notedgeek.notehub.service.DocService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/list")
 public class ListControllerHtml {
 
-    private final SimpleDocService service;
+    private final DocService service;
 
-    public ListControllerHtml(SimpleDocService service) {
+    public ListControllerHtml(DocService service) {
         this.service = service;
     }
 

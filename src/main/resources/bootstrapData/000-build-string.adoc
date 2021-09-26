@@ -1,0 +1,76 @@
+= `buildString`
+
+[source, kotlin]
+----
+fun buildString (
+        builderAction: (StringBuilder) -> Unit
+): String {
+    val sb = StringBuilder()
+    builderAction(sb)
+    return sb.toString()
+}
+----
+
+[source]
+----
+>>> val s = buildString {
+...     it.append("Hello, ")
+...     it.append("World!")
+... }
+>>> println(s)
+Hello, World!
+----
+
+[source, kotlin]
+----
+fun buildString (
+        builderAction: StringBuilder.() -> Unit
+): String {
+    val sb = StringBuilder()
+    sb.builderAction()
+    return sb.toString()
+}
+----
+
+[source]
+----
+>>> val s = buildString {
+...     append("Hello, ")
+...     append("World!")
+... }
+>>> println(s)
+Hello, World!
+----
+
+[source, kotlin]
+----
+fun buildString(builderAction: StringBuilder.() -> Unit): String =
+        StringBuilder().apply(builderAction).toString()
+----
+
+= `apply`
+
+[source, kotlin]
+----
+inline fun <T> T.apply(block: T.() -> Unit): T {
+    block()
+    return this
+}
+----
+
+= `with`
+
+[source, kotlin]
+----
+inline fun <T, R> with(receiver: T, block: T.() -> R): R =
+    receiver.block()
+----
+
+[source]
+----
+>>> val map = mutableMapOf(1 to "one")
+>>> map.apply { this[2] = "two" } // 'throw away returned map'
+>>> with (map) { this[3] = "three" }
+>>> println(map)
+{1=one, 2=two, 3=three}
+----

@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ConvertController {
+public class ConvertControllerHtml {
 
     @GetMapping("/convert")
     public String getEdit(Model model) {

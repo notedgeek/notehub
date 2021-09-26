@@ -1,7 +1,7 @@
 package com.notedgeek.notehub.controllers.rest;
 
-import com.notedgeek.notehub.entity.SimpleDoc;
-import com.notedgeek.notehub.service.SimpleDocService;
+import com.notedgeek.notehub.entity.Doc;
+import com.notedgeek.notehub.service.DocService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/list")
 public class ListControllerRest {
 
-    private final SimpleDocService service;
+    private final DocService service;
 
-    public ListControllerRest(SimpleDocService service) {
+    public ListControllerRest(DocService service) {
         this.service = service;
     }
 
     @GetMapping
-    public Iterable<SimpleDoc> listAll() {
+    public Iterable<Doc> listAll() {
         return service.listAll();
     }
 }

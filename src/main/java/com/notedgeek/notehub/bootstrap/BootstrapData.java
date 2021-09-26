@@ -1,11 +1,10 @@
 package com.notedgeek.notehub.bootstrap;
 
-import com.notedgeek.notehub.entity.SimpleDoc;
-import com.notedgeek.notehub.service.SimpleDocService;
+import com.notedgeek.notehub.entity.Doc;
+import com.notedgeek.notehub.service.DocService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,9 +16,9 @@ import java.util.stream.Stream;
 @Component
 public class BootstrapData implements CommandLineRunner {
 
-    private final SimpleDocService service;
+    private final DocService service;
 
-    public BootstrapData(SimpleDocService service) {
+    public BootstrapData(DocService service) {
         this.service = service;
     }
 
@@ -38,12 +37,11 @@ public class BootstrapData implements CommandLineRunner {
         try(InputStream inputStream = new FileInputStream(filename)) {
             byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
             String markdown =  new String(bytes, StandardCharsets.UTF_8);
-            SimpleDoc simpleDoc = new SimpleDoc();
-            simpleDoc.setMarkdown(markdown);
-            service.save(simpleDoc);
+            Doc doc = new Doc();
+            doc.setMarkdown(markdown);
+            service.save(doc);
         } catch (IOException ioex) {
-            throw new ResourceAccessException(ioex.getMessage());
+            throw new RuntimeException(ioex);
         }
-
     }
 }
