@@ -1,8 +1,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
-    <link rel="stylesheet" href="styles/rouge/seye.css">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="/styles/asciidoc/boot-darkly.css">
+    <link rel="stylesheet" href="/styles/rouge/seye.css">
+    <link rel="stylesheet" href="/styles/style.css">
     <style>
 
         #main-frame {
@@ -29,6 +29,16 @@
             background-color: #333;
         }
 
+        .doc-anchor {
+            color: #fff;
+            display: block;
+        }
+
+        .doc-anchor:hover {
+            color:white;
+            text-decoration:none;
+        }
+
     </style>
 </head>
 <body>
@@ -36,9 +46,11 @@
 <div id="main-frame">
     <div id=output-frame>
         <div th:each="doc : ${docs}" class="doc">
+            <a th:href="${'list/' + doc.getId()}" class="doc-anchor">
             <div th:text="${'date created : ' + doc.getDateCreated() + ', '
                 + 'date updated : ' + doc.getDateUpdated()}" />
             <div th:utext="${doc.getHtml()}" />
+            </a>
         </div>
     </div>
 </div>

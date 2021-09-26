@@ -7,6 +7,7 @@ import com.notedgeek.notehub.util.AsciidoctorConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class DocServiceImpl implements DocService {
@@ -22,6 +23,11 @@ public class DocServiceImpl implements DocService {
     @Override
     public Iterable<Doc> listAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Optional<Doc> findById(long id) {
+        return repository.findById(id);
     }
 
     @Override

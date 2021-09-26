@@ -3,6 +3,7 @@ package com.notedgeek.notehub.controllers.rest;
 import com.notedgeek.notehub.entity.Doc;
 import com.notedgeek.notehub.service.DocService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,10 @@ public class ListControllerRest {
     @GetMapping
     public Iterable<Doc> listAll() {
         return service.listAll();
+    }
+
+    @GetMapping("/{id}")
+    public Doc getById(@PathVariable long id) {
+        return service.findById(id).orElse(null);
     }
 }
