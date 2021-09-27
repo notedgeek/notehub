@@ -25,7 +25,7 @@ public class SaveControllerHtml {
         Doc doc = new Doc();
         doc.setMarkdown(markdown);
         doc = docService.save(doc);
-        List<String> tagList = Arrays.asList(tags.split("[ ,]+"));
+        List<String> tagList = Arrays.asList(tags.trim().split("[ ,]+"));
         docService.setTags(doc, tagList);
         docService.save(doc);
         return "redirect:/list";

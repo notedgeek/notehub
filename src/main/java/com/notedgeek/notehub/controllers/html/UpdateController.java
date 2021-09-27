@@ -24,7 +24,7 @@ public class UpdateController {
     public String update(@RequestParam long id, @RequestParam String markdown, @RequestParam String tags) {
         Doc doc = docService.findById(id).get();
         doc.setMarkdown(markdown);
-        List<String> tagList = Arrays.asList(tags.split("[ ,]+"));
+        List<String> tagList = Arrays.asList(tags.trim().split("[ ,]+"));
         docService.setTags(doc, tagList);
         docService.save(doc);
         return "redirect:/list";

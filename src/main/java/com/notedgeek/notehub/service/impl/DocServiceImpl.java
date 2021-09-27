@@ -14,11 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,21 +89,37 @@ public class DocServiceImpl implements DocService {
     @Override
     @Transactional
     public void setTags(Doc doc, Iterable<String> tagValues) {
-        SortedSet<String> tagValueSet = new TreeSet<>();
+
+        Set<String> newTagValueSet = new HashSet<>();
         for(String tagValue: tagValues) {
-            tagValueSet.add(tagValue);
+            if(!tagValue.equals("")) {
+                newTagValueSet.add(tagValue);
+            }
         }
+
+        Set<String> oldTagValueSet = doc.getTagLinks().stream()
+            .map(TagLink::getTag).map(Tag::getValue).collect(Collectors.toSet());
+
         List<TagLink> tagLinks = doc.getTagLinks();
+        List<TagLink> toDelete = new ArrayList<>();
         for(TagLink tagLink: tagLinks) {
-            tagLinkRepository.delete(tagLink);
+            if(!newTagValueSet.contains(tagLink.getTag().getValue())) {
+                tagLinkRepository.delete(tagLink);
+                toDelete.add(tagLink);
+            }
         }
-        tagLinks.clear();
-        for(String tagValue: tagValueSet) {
+        for(TagLink tagLink: toDelete) {
+            tagLinks.remove(tagLink);
+        }
+
+        for(String tagValue: newTagValueSet) {
+            if(oldTagValueSet.contains(tagValue)) {
+                continue;
+            }
             Tag tag = ensureTag(tagValue);
             TagLink tagLink = new TagLink();
             tagLink.setDoc(doc);
             tagLink.setTag(tag);
-            tagLinks.add(tagLink);
             tagLinkRepository.save(tagLink);
         }
     }
