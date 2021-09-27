@@ -16,8 +16,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Service
 public class DocServiceImpl implements DocService {
@@ -49,8 +51,29 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public List<Doc> findByTagValues(List<String> tagValue) {
-        return null;
+    public List<Doc> findByTagValues(List<String> tagValues) {
+        List<Doc> docs = new ArrayList<>();
+        boolean first = true;
+        Set<Long> viableDocIds = null;
+        for(String tagValue: tagValues) {
+            Tag tag = ensureTag(tagValue);
+            if(first) {
+                viableDocIds = tagLinkRepository.findByTag(tag).stream()
+                    .map(TagLink::getDoc).map(Doc::getId).collect(Collectors.toSet());
+            } else {
+                viableDocIds.retainAll(tagLinkRepository.findByTag(tag).stream()
+                    .map(TagLink::getDoc).map(Doc::getId).collect(Collectors.toSet()));
+            }
+            if(viableDocIds.size() == 0) {
+                return docs;
+            }
+            first = false;
+        }
+        for(long id: viableDocIds) {
+            docs.add(docRepository.getById(id));
+        }
+        docs.sort(Comparator.comparing(Doc::getDateUpdated).reversed());
+        return docs;
     }
 
     @Override
