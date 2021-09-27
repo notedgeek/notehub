@@ -13,4 +13,8 @@ public interface DocService {
 
     Doc save(Doc doc);
 
+    void setTags(Doc doc, Iterable<String> tagValues);
+
+    void addTag(Doc doc, String tagValue);
+
 }

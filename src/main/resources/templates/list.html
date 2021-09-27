@@ -50,9 +50,9 @@
         </form>
         <div th:each="doc : ${docs}" class="doc">
             <a th:href="${'/edit/' + doc.getId()}" class="doc-anchor">
-            <div th:text="${'date created : ' + doc.getDateCreated() + ', '
-                + 'date updated : ' + doc.getDateUpdated()}" />
-            <div th:utext="${doc.getHtml()}" />
+                <div th:text="${'date created : ' + doc.getDateCreated() + ', ' + 'date updated : ' + doc.getDateUpdated()}" ></div>
+                <div th:text="${'tags: ' + @utils.getTagString(doc.tags)}" ></div>
+                <div th:utext="${doc.getHtml()}" ></div>
             </a>
         </div>
     </div>

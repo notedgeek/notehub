@@ -3,8 +3,13 @@ package com.notedgeek.notehub.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -24,6 +29,14 @@ public class Doc {
     private Date dateCreated;
 
     private Date dateUpdated;
+
+    @ManyToMany
+    @JoinTable(
+        name = "doc_tag",
+        joinColumns = @JoinColumn(name = "doc_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    ) private List<Tag> tags = new ArrayList<>();
+
 
     public long getId() {
         return id;
@@ -60,4 +73,9 @@ public class Doc {
     public void setDateUpdated(Date dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
 }
