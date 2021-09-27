@@ -85,6 +85,7 @@
                 <input type="hidden" name="id" th:value="${doc.getId()}" />
             </div>
             <div id="control-frame">
+                tags: <input id="tag-list" type="text" name="tags" size="80" th:value="${@utils.getTagString(doc.tags)}">
                 <button id="render-button" type="button" onclick="render()">render</button>
                 <button id="submit-button" type="submit">save</button>
             </div>
