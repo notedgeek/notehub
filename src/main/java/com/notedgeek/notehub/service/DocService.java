@@ -17,4 +17,5 @@ public interface DocService {
 
     void addTag(Doc doc, String tagValue);
 
+    List<Doc> findByTagValues(List<String> tagValue);
 }

@@ -45,13 +45,16 @@
 <h2>list</h2>
 <div id="main-frame">
     <div id=output-frame>
+        <form action="/search" method="GET">
+            <button type=submit>search</button>
+        </form>
         <form action="/create" method="GET">
             <button type=submit>create</button>
         </form>
         <div th:each="doc : ${docs}" class="doc">
             <a th:href="${'/edit/' + doc.getId()}" class="doc-anchor">
                 <div th:text="${'date created : ' + doc.getDateCreated() + ', ' + 'date updated : ' + doc.getDateUpdated()}" ></div>
-                <div th:text="${'tags: ' + @utils.getTagString(doc.tags)}" ></div>
+                <div th:text="${'tags: ' + @utils.getTagString(doc.tagLinks)}" ></div>
                 <div th:utext="${doc.getHtml()}" ></div>
             </a>
         </div>

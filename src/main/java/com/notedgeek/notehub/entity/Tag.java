@@ -3,7 +3,8 @@ package com.notedgeek.notehub.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.GenerationType.AUTO;
@@ -17,8 +18,9 @@ public class Tag {
 
     private String value;
 
-    @ManyToMany(mappedBy = "tags")
-    private List<Doc> docs;
+    @OneToMany(mappedBy = "tag")
+    private List<TagLink> tagLinks = new ArrayList<>();
+
 
     public long getId() {
         return id;
@@ -36,11 +38,8 @@ public class Tag {
         this.value = value;
     }
 
-    public List<Doc> getDocs() {
-        return docs;
+    public List<TagLink> getTagLinks() {
+        return tagLinks;
     }
 
-    public void setDocs(List<Doc> docs) {
-        this.docs = docs;
-    }
 }
