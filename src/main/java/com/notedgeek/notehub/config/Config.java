@@ -15,7 +15,7 @@ public class Config {
     public DataSource mysqlDataSource() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/notehub");
+        config.setJdbcUrl("jdbc:mysql://notehub-db:3306/notehub");
         config.setUsername("notehub");
         config.setPassword("notehub");
         return new HikariDataSource(config);

@@ -63,7 +63,7 @@
             }
             xhttp.open("POST", "/api/convert", true);
             xhttp.setRequestHeader("Content-Type", "text/plain");
-
+            xhttp.setRequestHeader(csrfp, csrft)
             xhttp.send(text);
         }
         document.addEventListener("DOMContentLoaded", function(){
@@ -73,7 +73,15 @@
 </head>
 <body>
 <h2>edit</h2>
+<script th:inline="javascript">
+    var csrfp = [[${_csrf.headerName}]];
+    var csrft = [[${_csrf.token}]];
+</script>
 <form action="/update" method="POST">
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}" />
     <div id="main-frame">
         <div id=input-frame>
             <div id="edit-frame">

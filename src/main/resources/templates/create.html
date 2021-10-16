@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="styles/asciidoc/boot-darkly.css">
     <link rel="stylesheet" href="styles/rouge/seye.css">
@@ -63,31 +63,39 @@
             }
             xhttp.open("POST", "api/convert", true);
             xhttp.setRequestHeader("Content-Type", "text/plain");
-
+            xhttp.setRequestHeader(csrfp, csrft)
             xhttp.send(text);
         }
     </script>
 </head>
 <body>
 <h2>create</h2>
+<script th:inline="javascript">
+    var csrfp = [[${_csrf.headerName}]];
+    var csrft = [[${_csrf.token}]];
+</script>
 <form action="/save" method="POST">
-<div id="main-frame">
-    <div id=input-frame>
-        <div id="edit-frame">
-            <textarea id="edit-text" name="markdown" cols="100"></textarea>
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}" />
+    <div id="main-frame">
+        <div id=input-frame>
+            <div id="edit-frame">
+                <textarea id="edit-text" name="markdown" cols="100"></textarea>
+            </div>
+            <div id="control-frame">
+                tags: <input id="tag-list" type="text" name="tags" size="80" >
+                <button id="render-button" type="button" onclick="render()">render</button>
+                <button id="submit-button" type="submit">save</button>
+            </div>
         </div>
-        <div id="control-frame">
-            tags: <input id="tag-list" type="text" name="tags" size="80" >
-            <button id="render-button" type="button" onclick="render()">render</button>
-            <button id="submit-button" type="submit">save</button>
-        </div>
-    </div>
 
-    <div id=output-frame>
-        <div id="rendered-output">
+        <div id=output-frame>
+            <div id="rendered-output">
+            </div>
         </div>
     </div>
-</div>
 </form>
 </body>
 </html>

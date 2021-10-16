@@ -1,0 +1,18 @@
+version: '3'
+services:
+  notehub:
+    container_name: notehub
+    build: .
+    ports:
+      - "80:8080"
+    restart: unless-stopped
+    environment:
+      - SPRING_SECURITY_USER_NAME
+      - SPRING_SECURITY_USER_PASSWORD
+  notehub-db:
+    image: notehub-db
+    container_name: notehub-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ${DB_DIR}:/var/lib/mysql
