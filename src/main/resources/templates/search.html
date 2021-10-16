@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="/styles/asciidoc/boot-darkly.css">
     <link rel="stylesheet" href="/styles/rouge/seye.css">
@@ -59,6 +59,10 @@
 <body>
 <h2>search</h2>
 <form action="/search" method="POST">
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}" />
     <div id="main-frame">
         <div id=input-frame>
             <div id="control-frame">
